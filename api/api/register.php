@@ -4,7 +4,11 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require "../../db.php";
+<<<<<<< HEAD
 require "../../vendor/autoload.php";
+=======
+require "../../vendor/autoload.php";;
+>>>>>>> ae9c3f78b752a6e0fa114905d869f671c290f001
 
 use Firebase\JWT\JWT;
 

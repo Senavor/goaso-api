@@ -1,5 +1,9 @@
 <?php
+<<<<<<< HEAD
 require_once "../../db.php";
+=======
+require "../../db.php";
+>>>>>>> ae9c3f78b752a6e0fa114905d869f671c290f001
 
 header('Content-Type: application/json');
 
