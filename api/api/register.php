@@ -3,14 +3,9 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require "../../db.php";
-require "../../vendor/autoload.php";
-
-use Firebase\JWT\JWT;
-
 header('Content-Type: application/json');
 
-$secret_key = "YOUR_SUPER_SECRET_KEY";
+require "../../db.php";
 
 /*
 |--------------------------------------------------------------------------
@@ -74,9 +69,9 @@ $stmt->bind_param("s", $email);
 
 $stmt->execute();
 
-$stmt->store_result();
+$result = $stmt->get_result();
 
-if($stmt->num_rows > 0){
+if($result->num_rows > 0){
 
     echo json_encode([
         "success" => false,
@@ -117,43 +112,14 @@ if(!$insert->execute()){
 
     echo json_encode([
         "success" => false,
-        "message" => "Registration failed"
+        "message" => "Registration failed",
+        "error" => $insert->error
     ]);
 
     exit;
 }
 
 $user_id = $insert->insert_id;
-
-/*
-|--------------------------------------------------------------------------
-| CREATE JWT TOKEN
-|--------------------------------------------------------------------------
-*/
-
-$payload = [
-
-    "iss" => "goasoshopfinder",
-
-    "aud" => "flutter_app",
-
-    "iat" => time(),
-
-    "exp" => time() + (60 * 60 * 24 * 7),
-
-    "data" => [
-
-        "id" => $user_id,
-
-        "email" => $email
-    ]
-];
-
-$jwt = JWT::encode(
-    $payload,
-    $secret_key,
-    'HS256'
-);
 
 /*
 |--------------------------------------------------------------------------
@@ -167,7 +133,7 @@ echo json_encode([
 
     "message" => "Account created successfully",
 
-    "token" => $jwt,
+    "token" => "temporary_token",
 
     "user" => [
 
