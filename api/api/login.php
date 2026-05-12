@@ -1,6 +1,6 @@
 <?php
-require "../db.php";
-require "../vendor/autoload.php";
+require "../../db.php";
+
 header('Content-Type: application/json');
 
 $email = trim($_POST['email'] ?? '');
