@@ -1,35 +1,25 @@
 <?php
 
-require_once "../../db.php";
-
-
 header('Content-Type: application/json');
 
-$sql = "
-SELECT 
-    c.id,
-    c.shop_id,
-    c.media_type,
-    c.media_url,
-    c.description,
-    s.name AS shop_name,
-    s.category AS shop_category,
-    s.phone AS shop_phone
-FROM shop_catalog c
-JOIN shops s ON c.shop_id = s.id
-WHERE s.status='approved'
-ORDER BY c.created_at DESC
-";
+require "../../db.php";
 
-$result = $conn->query($sql);
+$result = $conn->query("
+SELECT *
+FROM shops
+ORDER BY id DESC
+");
 
 $shops = [];
 
 while($row = $result->fetch_assoc()){
+
     $shops[] = $row;
 }
 
 echo json_encode([
+
     "success" => true,
-    "data" => $shops
+
+    "shops" => $shops
 ]);
