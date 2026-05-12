@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require "../../db.php";
-
+require "../../vendor/autoload.php";
 
 use Firebase\JWT\JWT;
 
